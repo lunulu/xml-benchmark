@@ -2,7 +2,7 @@ MAKEFLAGS += --no-print-directory
 
 LANGS := python ruby go
 VARIANTS_python := dom
-VARIANTS_ruby := ox rexml
+VARIANTS_ruby := ox rexml nokogiri
 VARIANTS_go := dom
 
 DATA := $(abspath data/input.xml)
@@ -32,7 +32,6 @@ clean:
 			$(MAKE) -C $$lang/$$variant clean || true; \
 		done \
 	done
-	@echo "🧹 Очистка завершена"
 
 define build_rules
 
