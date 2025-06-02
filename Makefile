@@ -1,5 +1,6 @@
 MAKEFLAGS += --no-print-directory
 
+LANG_DIR := langs
 LANGS := ruby python go js
 VARIANTS_ruby := ox ox-sax nokogiri
 VARIANTS_python := lxml lxml-iterparse elementtree
@@ -26,7 +27,7 @@ bench: $(LANGS:%=bench-%)
 define CLEAN_VARIANTS
 clean-$(1):
 	@for variant in $$(VARIANTS_$(1)); do \
-		$(MAKE) -C $(1)/$$$$variant clean || true; \
+		$(MAKE) -C $(LANG_DIR)/$(1)/$$$$variant clean || true; \
 	done
 endef
 
@@ -39,13 +40,13 @@ define build_rules
 build-$(1):
 	@echo "🔧 Building $(1)"
 	@for variant in $$(VARIANTS_$(1)); do \
-		$(MAKE) -s -C $(1)/$$$${variant} build || echo "❌ $(1)/$$$${variant}: build failed"; \
+		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} build || echo "❌ $(LANG_DIR)/$(1)/$$$${variant}: build failed"; \
 	done
 
 run-$(1):
 	@echo "🚀 Running $(1)"
 	@for variant in $$(VARIANTS_$(1)); do \
-		$(MAKE) -s -C $(1)/$$$${variant} run INPUT=$(DATA) || echo "❌ $(1)/$$$${variant}: run failed"; \
+		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} run INPUT=$(DATA) || echo "❌ $(LANG_DIR)/$(1)/$$$${variant}: run failed"; \
 	done
 
 bench-$(1):
@@ -53,7 +54,7 @@ bench-$(1):
 		echo ""; \
 		echo "📶 Benchmarking $(1)/$$$$variant"; \
 		/usr/bin/time -f "real: %e sec\nuser: %U sec\nsys:  %S sec\nmem:  %M KB" \
-			$(MAKE) -s -C $(1)/$$$$variant run INPUT=$(DATA) 2>&1; \
+			$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$$variant run INPUT=$(DATA) 2>&1; \
 	done
 
 endef

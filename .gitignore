@@ -1,8 +1,8 @@
 .idea
 data/input.xml
-go/**/main
-go/**/go.mod
-go/**/go.sum
-js/**/node_modules
-js/**/package.json
-js/**/package-lock.json
+langs/go/**/main
+langs/go/**/go.mod
+langs/go/**/go.sum
+langs/js/**/node_modules
+langs/js/**/package.json
+langs/js/**/package-lock.json
