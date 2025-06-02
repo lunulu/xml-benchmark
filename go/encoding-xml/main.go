@@ -43,7 +43,7 @@ type Customer struct {
 }
 
 func main() {
-	runtime.GOMAXPROCS(1) // ограничиваем до одного потока
+	runtime.GOMAXPROCS(1)
 
 	if len(os.Args) < 2 {
 		fmt.Println("XML file is missing")

@@ -1,9 +1,10 @@
 MAKEFLAGS += --no-print-directory
 
-LANGS := ruby python go
-VARIANTS_ruby := ox ox-sax nokogiri # rexml
-VARIANTS_python := lxml lxml-iterparse elementtree # xmltodict
+LANGS := ruby python go js
+VARIANTS_ruby := ox ox-sax nokogiri
+VARIANTS_python := lxml lxml-iterparse elementtree
 VARIANTS_go := encoding-xml xml-stream-parser mxj
+VARIANTS_js := fast-xml-parser sax
 
 DATA := $(abspath data/input.xml)
 

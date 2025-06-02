@@ -21,7 +21,7 @@ orders.each do |order|
   status = order[:status]
   active_count += 1 if status == 'active'
   orders_per_customer[customer_id] += 1
-  items_count = order.locate('items/*').count
+  items_count = order.locate('items/*').sum { |item| item&.quantity.to_i }
   items_per_customer[customer_id] += items_count
 end
 

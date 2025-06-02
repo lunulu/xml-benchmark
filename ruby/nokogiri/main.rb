@@ -25,7 +25,7 @@ orders.each do |order|
   orders_per_customer[customer_id] += 1
 
   items = order.xpath('items/*')
-  items_per_customer[customer_id] += items.size
+  items_per_customer[customer_id] += items.sum { |item| item['quantity'].to_i }
 end
 
 total_customers = orders_per_customer.keys.size

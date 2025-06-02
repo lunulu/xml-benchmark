@@ -1,6 +1,8 @@
-benchmark.log
 .idea
 data/input.xml
 go/**/main
 go/**/go.mod
 go/**/go.sum
+js/**/node_modules
+js/**/package.json
+js/**/package-lock.json
