@@ -28,7 +28,15 @@ ordersArray.forEach(order => {
     ordersPerCustomer[customerId] = (ordersPerCustomer[customerId] || 0) + 1;
 
     const items = order.items?.item || [];
-    const itemCount = Array.isArray(items) ? items.length : 1;
+
+    let itemCount = 0;
+    if (Array.isArray(items)) {
+        for (const item of items) {
+            itemCount += parseInt(item?.['@_quantity'] || '1', 10);
+        }
+    } else {
+        itemCount += parseInt(items?.['@_quantity'] || '1', 10);
+    }
     itemsPerCustomer[customerId] = (itemsPerCustomer[customerId] || 0) + itemCount;
 });
 

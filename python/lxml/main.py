@@ -25,7 +25,12 @@ for order in orders:
     orders_per_customer[customer_id] += 1
 
     items = order.xpath("items/item")
-    items_per_customer[customer_id] += len(items)
+    items_count = 0
+    for item in items:
+        quantity = item.get("quantity")
+        items_count += int(quantity) if quantity is not None else 1
+    items_per_customer[customer_id] += items_count
+
 
 total_customers = len(orders_per_customer)
 total_orders = sum(orders_per_customer.values())

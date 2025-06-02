@@ -26,7 +26,10 @@ for order in orders.findall('order'):
 
     items = order.find('items')
     if items is not None:
-        items_count = len(items.findall('item'))
+        items_count = 0
+        for item in items.findall('item'):
+            quantity = item.get('quantity')
+            items_count += int(quantity) if quantity is not None else 1
         items_per_customer[customer_id] += items_count
 
 total_customers = len(orders_per_customer)

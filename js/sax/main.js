@@ -9,7 +9,7 @@ if (process.argv.length < 3) {
 const path = process.argv[2];
 const stream = fs.createReadStream(path, { encoding: 'utf8' });
 
-const parser = sax.createStream(true); // true — включает "strict mode"
+const parser = sax.createStream(true);
 
 let currentTag = null;
 let inOrder = false;
@@ -42,8 +42,9 @@ parser.on('opentag', node => {
         inItems = true;
     }
 
-    if (inItems && node.name !== 'items') {
-        itemCount++; // подсчёт каждого <item>
+    if (inItems && node.name === 'item') {
+        const quantity = parseInt(node.attributes.quantity || '1', 10);
+        itemCount += quantity;
     }
 
     if (node.name === 'customer') {
