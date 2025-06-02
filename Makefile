@@ -1,8 +1,8 @@
 MAKEFLAGS += --no-print-directory
 
 LANGS := python ruby go
-VARIANTS_python := dom
-VARIANTS_ruby := ox rexml nokogiri
+VARIANTS_python := lxml elementtree xmltodict
+VARIANTS_ruby := ox nokogiri # rexml - too slow
 VARIANTS_go := dom
 
 DATA := $(abspath data/input.xml)
