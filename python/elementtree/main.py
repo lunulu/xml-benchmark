@@ -11,7 +11,7 @@ tree = ET.parse(path)
 root = tree.getroot()
 
 orders = root.find('orders')
-customers = root.find('customers')  # может быть None
+customers = root.find('customers')
 
 active_count = 0
 orders_per_customer = defaultdict(int)
