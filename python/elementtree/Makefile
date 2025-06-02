@@ -1,5 +1,4 @@
 build:
-	pip install lxml
 	@echo "✅ Python ElementTree: nothing to build"
 
 run:

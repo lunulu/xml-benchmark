@@ -1,4 +1,5 @@
 build:
+	pip install lxml
 	@echo "✅ Python lxml: dependencies are installed"
 
 run:

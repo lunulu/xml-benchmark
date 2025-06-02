@@ -1,8 +1,8 @@
 MAKEFLAGS += --no-print-directory
 
 LANGS := python ruby go
-VARIANTS_python := lxml elementtree xmltodict
-VARIANTS_ruby := ox nokogiri # rexml - too slow
+VARIANTS_python := lxml lxml-iterparse elementtree # xmltodict
+VARIANTS_ruby := ox ox-sax nokogiri # rexml
 VARIANTS_go := dom
 
 DATA := $(abspath data/input.xml)
@@ -51,7 +51,7 @@ bench-$(1):
 	@for variant in $$(VARIANTS_$(1)); do \
 		echo ""; \
 		echo "📶 Benchmarking $(1)/$$$$variant"; \
-		/usr/bin/time -f "real: %e sec\nuser: %U sec\nsys:  %S sec" \
+		/usr/bin/time -f "real: %e sec\nuser: %U sec\nsys:  %S sec\nmem:  %M KB" \
 			$(MAKE) -s -C $(1)/$$$$variant run INPUT=$(DATA) 2>&1; \
 	done
 
