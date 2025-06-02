@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <orders>
+    <order id="1" customer_id="1001" status="cancelled">
+      <items>
+        <item id="1_1" quantity="2">
+          <name>Item 1</name>
+          <price>97.76</price>
+        </item>
+      </items>
+    </order>
+  </orders>
+  <customers>
+    <customer id="1001">
+      <name>Customer 1001</name>
+      <email>customer1001@example.com</email>
+      <address>
+        <street>Main St 1001</street>
+        <city>City 0</city>
+        <zip>16900</zip>
+      </address>
+    </customer>
+  </customers>
+</data>

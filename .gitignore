@@ -1,4 +1,6 @@
 benchmark.log
 .idea
 data/input.xml
-go/main
+go/**/main
+go/**/go.mod
+go/**/go.sum
