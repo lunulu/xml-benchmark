@@ -37,8 +37,6 @@ class OrderStatsHandler < ::Ox::Sax
       @items_count = 0
     when :items
       @in_items = true if @in_order
-    when :item
-      @items_count += 1 if @in_items
     when :customer
       @in_customer = true
       @current_email = nil
@@ -56,6 +54,7 @@ class OrderStatsHandler < ::Ox::Sax
         @active_count += 1 if @current_order_status == 'active'
       end
       @in_order = false
+      @items_count = 0
     when :items
       @in_items = false
     when :customer
@@ -77,7 +76,11 @@ class OrderStatsHandler < ::Ox::Sax
       when :status
         @current_order_status = value
       end
-    elsif @in_customer && name == :id
+    end
+    if @in_items && name == :quantity
+      @items_count += value.to_i
+    end
+    if @in_customer && name == :id
       @current_customer_id_for_email = value
     end
   end

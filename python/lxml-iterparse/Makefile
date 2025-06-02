@@ -1,5 +1,5 @@
 build:
-	pip install lxml
+	pip install -q lxml
 	@echo "✅ Python lxml-iterparse: dependencies are installed"
 
 run:
