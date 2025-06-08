@@ -9,7 +9,20 @@ VARIANTS_js := fast-xml-parser sax
 
 DATA := $(abspath data/input.xml)
 
-.PHONY: full generate clean build run bench $(LANGS:%=build-%) $(LANGS:%=run-%) $(LANGS:%=bench-%)
+.PHONY: install full generate clean build run bench $(LANGS:%=build-%) $(LANGS:%=run-%) $(LANGS:%=bench-%)
+
+install:
+	@command -v mise >/dev/null 2>&1 || { \
+    		echo "❌ 'mise' is not installed. Please install it from: https://github.com/jdx/mise" >&2; \
+    		echo "🔁 After installing, re-run: make install" >&2; \
+    		exit 1; \
+    }
+	@echo "📦 Installing languages and dependencies with mise"
+	@mise install ruby
+	@mise install python
+	@mise install go
+	@mise install node
+	@echo "✅ All environments installed"
 
 full: generate build bench
 
