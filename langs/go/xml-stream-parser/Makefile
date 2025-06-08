@@ -3,6 +3,7 @@ BIN = main
 build:
 	@test -f go.mod || go mod init xmlparser-bench
 	go get github.com/tamerh/xml-stream-parser
+	go mod tidy
 	go build -o $(BIN) main.go
 	@echo "✅ Go xml-stream-parser: file is compiled and dependencies installed"
 

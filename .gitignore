@@ -1,5 +1,6 @@
 .idea
 data/input.xml
+data/benchmark_results/
 langs/go/**/main
 langs/go/**/go.mod
 langs/go/**/go.sum

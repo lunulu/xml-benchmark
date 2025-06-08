@@ -9,7 +9,7 @@ VARIANTS_js := fast-xml-parser sax
 
 DATA := $(abspath data/input.xml)
 
-.PHONY: install full generate clean build run bench $(LANGS:%=build-%) $(LANGS:%=run-%) $(LANGS:%=bench-%)
+.PHONY: install full generate clean build run bench visualize $(LANGS:%=build-%) $(LANGS:%=run-%) $(LANGS:%=bench-%)
 
 install:
 	@command -v mise >/dev/null 2>&1 || { \
@@ -24,7 +24,7 @@ install:
 	@mise install node
 	@echo "✅ All environments installed"
 
-full: generate build bench
+full: generate build bench visualize
 
 generate:
 	@gem list ox -i > /dev/null || gem install ox
@@ -32,6 +32,10 @@ generate:
 	@rm -f $(DATA)
 	@ruby tools/generate_xml.rb $(DATA) $(MB)
 
+visualize:
+	@gem list colorize -i > /dev/null || gem install colorize
+	@gem list tty-table -i > /dev/null || gem install tty-table
+	@ruby tools/visualize_bench.rb
 
 build: $(LANGS:%=build-%)
 run:   $(LANGS:%=run-%)
@@ -63,12 +67,15 @@ run-$(1):
 	done
 
 bench-$(1):
+	@mkdir -p data/benchmark_results/$(1)
 	@for variant in $$(VARIANTS_$(1)); do \
 		echo ""; \
 		echo "📶 Benchmarking $(1)/$$$$variant"; \
 		/usr/bin/time -f "real: %e sec\nuser: %U sec\nsys:  %S sec\nmem:  %M KB" \
-			$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$$variant run INPUT=$(DATA) 2>&1; \
+			$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$$variant run INPUT=$(DATA) 2>&1 \
+			| tee data/benchmark_results/$(1)/$$$$variant.log; \
 	done
+
 
 endef
 
