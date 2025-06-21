@@ -1,11 +1,12 @@
 MAKEFLAGS += --no-print-directory
 
 LANG_DIR := langs
-LANGS := ruby python go js
+LANGS := ruby python go js dotnet
 VARIANTS_ruby := ox ox-sax nokogiri
 VARIANTS_python := lxml lxml-iterparse elementtree
 VARIANTS_go := encoding-xml xml-stream-parser mxj
 VARIANTS_js := fast-xml-parser sax
+VARIANTS_dotnet := xmldocument xdocument xmlreader
 
 DATA := $(abspath data/input.xml)
 
@@ -22,6 +23,7 @@ install:
 	@mise install python
 	@mise install go
 	@mise install node
+	@mise install dotnet
 	@echo "✅ All environments installed"
 
 full: generate build bench visualize
