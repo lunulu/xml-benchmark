@@ -21,18 +21,12 @@ install:
     		exit 1; \
     }
 	@echo "📦 Installing languages and dependencies with mise"
-	@mise install ruby
-	@mise install python
-	@mise install go
-	@mise install node
-	@mise install dotnet
-	@mise install java
 	@sudo apt update
 	@sudo apt install -y autoconf bison re2c libxml2-dev libsqlite3-dev \
   		libcurl4-openssl-dev libjpeg-dev libpng-dev libonig-dev libssl-dev \
   		libreadline-dev libzip-dev libtidy-dev libxslt-dev pkg-config \
   		build-essential locate libgd-dev
-	@mise install php
+	@mise install
 	@echo "✅ All environments installed"
 
 full: generate build bench visualize
