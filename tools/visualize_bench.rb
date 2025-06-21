@@ -10,9 +10,23 @@ unless Dir.exist?(RESULTS_DIR)
 end
 
 results = []
+reference_lines = nil
+inconsistent_files = []
 
 Dir.glob("#{RESULTS_DIR}/**/*.log").each do |file|
   content = File.read(file)
+  lines = content.lines.map(&:strip)
+
+  next if lines.size < 3
+
+  current_lines = lines[0..2]
+  if reference_lines.nil?
+    reference_lines = current_lines
+  elsif reference_lines != current_lines
+    inconsistent_files << file
+    warn "⚠️  Skipping inconsistent benchmark output: #{file}".yellow
+    next
+  end
 
   variant_path = Pathname(file).relative_path_from(Pathname(RESULTS_DIR)).to_s
   lang, impl = variant_path.sub('.log', '').split('/')
@@ -40,6 +54,15 @@ end
 if results.empty?
   warn "❌ No valid benchmark logs found.".red
   exit 1
+end
+
+puts "\n🔍 Checking benchmark consistency...\n\n"
+puts "Reference output (first 3 lines):".light_blue
+puts reference_lines.map { |line| "  #{line}" }.join("\n")
+puts
+
+if inconsistent_files.empty?
+  puts "✅ All benchmark outputs are valid.\n".green
 end
 
 min_real = results.map { _1[:real] }.min

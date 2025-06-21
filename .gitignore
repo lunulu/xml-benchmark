@@ -10,3 +10,4 @@ langs/js/**/package.json
 langs/js/**/package-lock.json
 langs/dotnet/**/bin/
 langs/dotnet/**/obj/
+langs/java/**/*.class
