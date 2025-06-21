@@ -1,13 +1,14 @@
 MAKEFLAGS += --no-print-directory
 
 LANG_DIR := langs
-LANGS := ruby python go js dotnet java
+LANGS := ruby python go js dotnet java php
 VARIANTS_ruby := ox ox-sax nokogiri
 VARIANTS_python := lxml lxml-iterparse elementtree
 VARIANTS_go := encoding-xml xml-stream-parser mxj
 VARIANTS_js := fast-xml-parser sax
 VARIANTS_dotnet := xmldocument xdocument xmlreader
 VARIANTS_java := dom sax stax # jaxb vtd-xml
+VARIANTS_php := domdocument xmlreader
 
 DATA := $(abspath data/input.xml)
 
@@ -26,6 +27,12 @@ install:
 	@mise install node
 	@mise install dotnet
 	@mise install java
+	@sudo apt update
+	@sudo apt install -y autoconf bison re2c libxml2-dev libsqlite3-dev \
+  		libcurl4-openssl-dev libjpeg-dev libpng-dev libonig-dev libssl-dev \
+  		libreadline-dev libzip-dev libtidy-dev libxslt-dev pkg-config \
+  		build-essential locate libgd-dev
+	@mise install php
 	@echo "✅ All environments installed"
 
 full: generate build bench visualize
