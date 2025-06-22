@@ -1,8 +1,7 @@
 .idea
 .vscode
 xml-benchmark.sln
-data/input.xml
-data/benchmark_results/
+data
 langs/go/**/main
 langs/go/**/go.mod
 langs/go/**/go.sum
