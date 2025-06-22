@@ -14,3 +14,4 @@ langs/dotnet/**/obj/
 langs/java/**/*.class
 langs/c/**/main
 langs/cpp/**/main
+langs/cpp/pugixml/pugi*
