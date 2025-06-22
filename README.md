@@ -92,11 +92,11 @@ make install
 ## 🔍 Usage
 
 ```bash
-make generate     # Generate sample XML data
-make build        # Build all implementations
-make bench        # Run all benchmarks
-make visualize    # Show formatted result table
-make clean        # Cleans all compiled and temporary files
+make generate MB=100  # Generate sample XML data
+make build            # Build all implementations
+make bench            # Run all benchmarks
+make visualize        # Show formatted result table
+make clean            # Cleans all compiled and temporary files
 ```
 
 To benchmark a single language:
@@ -114,6 +114,9 @@ make bench-c
 ```
 .
 ├── data/                  # Generated XML and benchmark results
+├── docs/
+│   ├── benchmark_table.md
+│   ├── sample.xml         # Simple file with single order, customer etc.
 ├── langs/                 # Implementations by language
 │   ├── cpp/
 │   ├── ruby/
@@ -129,7 +132,16 @@ make bench-c
 
 ## 🤝 Contributing
 
-All contributions are welcome! Want to add a new parser?
+Contributions are more than welcome!
+
+In particular, feel free to:
+- 🔧 Improve or optimize existing parsers (as long as it doesn't break fairness)
+- 🆕 Add parsers for new languages or libraries
+- 🛠 Refactor internal tooling or Makefiles
+
+**Note:** Please avoid "extreme" tuning (e.g. hardcoding output, unrealistic environment hacks) — the goal is realistic, portable performance.
+
+Want to add a new parser?
 
 1. Add your code under `langs/<language>/<parser_name>/`
 2. Implement `build`, `run`, and `clean` in the parser's `Makefile`
@@ -139,9 +151,26 @@ All contributions are welcome! Want to add a new parser?
 ```bash
 make build-<language>
 make bench-<language>
+make visualize          # Validates outputs
 ```
 
 5. Open a PR 🙌
+
+---
+
+## 🧪 Methodology
+
+- By default, a synthetic XML file of **100 MB** is generated for all parsers using `tools/generate_xml.rb`.  
+  A small example is included in [`docs/sample.xml`](docs/sample.xml) for reference.
+- Parsers aim to disable or avoid **multithreading**, garbage collection tuning, or aggressive JIT tricks where possible.
+- All tests are run in isolation, and measurements include:
+  - `real` (wall time),
+  - `user` (CPU time),
+  - `sys` (system calls),
+  - and `mem` (peak memory usage in KB).
+- Benchmarks were executed on a **Ryzen 7 5800X**, running Ubuntu 24.04.
+
+> 📄 Full benchmark results are available in [`docs/benchmark_table.md`](docs/benchmark_table.md)
 
 ---
 
