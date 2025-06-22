@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-print-directory
 
 LANG_DIR := langs
-LANGS := ruby python go js dotnet java php c
+LANGS := ruby python go js dotnet java php c cpp
 VARIANTS_ruby := ox ox-sax nokogiri
 VARIANTS_python := lxml lxml-iterparse elementtree
 VARIANTS_go := encoding-xml xml-stream-parser mxj
@@ -10,6 +10,7 @@ VARIANTS_dotnet := xmldocument xdocument xmlreader
 VARIANTS_java := dom sax stax # jaxb vtd-xml
 VARIANTS_php := domdocument xmlreader
 VARIANTS_c := libxml2 expat
+VARIANTS_cpp := pugixml expat
 
 DATA := $(abspath data/input.xml)
 
