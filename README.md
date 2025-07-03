@@ -67,25 +67,26 @@ make install
 
 ### 🏎️ Top 5 Fastest (by `real` time)
 
-| 🥇 Rank | Language | Implementation    | ⏱ Real (s) | 🧠 Mem (KB) |
-|--------:|----------|-------------------|------------|-------------|
-| 1       | C++      | pugixml           | **0.37**   | 505224      |
-| 2       | C        | expat             | 0.81       | **3780**     |
-| 3       | C++      | expat             | 0.81       | 5736        |
-| 4       | Java     | sax               | 1.18       | 567188      |
-| 5       | Java     | stax              | 1.21       | 568476      |
+#### 🌳 DOM Parsers
+| 🥇 Rank | Language | Implementation | ⏱ Real (s) | 🧠 Mem (KB) |
+| ------: | -------- | -------------- | ---------- | ----------- |
+|       1 | C++      | pugixml        | **0.39**   | 505040      |
+|       2 | C        | libxml2        | 2.80       | 2182920     |
+|       3 | .NET     | xdocument      | 2.98       | 551896      |
+|       4 | PHP      | domdocument    | 3.29       | 1908840     |
+|       5 | Java     | dom            | 3.52       | 1574484     |
 
-### 💾 Top 5 Most Memory-Efficient
+#### 🧵 SAX / Streaming Parsers
+| 🥇 Rank | Language | Implementation | ⏱ Real (s) | 🧠 Mem (KB) |
+| ------: | -------- | -------------- | ---------- | ----------- |
+|       1 | C        | expat          | **0.82**   | 3536        |
+|       2 | C++      | expat          | 0.82       | 5920        |
+|       3 | Java     | sax            | 1.04       | 565328      |
+|       4 | Java     | stax           | 1.16       | 568432      |
+|       5 | Ruby     | ox-sax         | 1.51       | 17464       |
 
-| 🥇 Rank | Language | Implementation | 📉 Mem (KB) | ⏱ Real (s) |
-|--------:|----------|----------------|-------------|------------|
-| 1       | C        | expat          | **3780**     | 0.81       |
-| 2       | C++      | expat          | 5736        | 0.81       |
-| 3       | Go       | xml-stream     | 11920       | 1.61       |
-| 4       | Ruby     | ox-sax         | 17260       | 1.45       |
-| 5       | Python   | lxml-iterparse | 24988       | 2.79       |
+> 📊 Full benchmark table is viewable via `make visualize` or in **docs/benchmark_table.md** (`make visualize-md` to update).
 
-> 📊 Full benchmark table is viewable via `make visualize`.
 
 ---
 
