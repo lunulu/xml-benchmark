@@ -1,13 +1,13 @@
 require 'ox'
 
 if ARGV.empty?
-  puts 'XML file is missing'
+  warn 'XML file is missing'
   exit 1
 end
 
 path = ARGV[0]
 
-class OrderStatsHandler < ::Ox::Sax
+class OrderStatsHandler < Ox::Sax
   attr_reader :active_count, :orders_per_customer, :items_per_customer, :customers
 
   def initialize
@@ -17,8 +17,6 @@ class OrderStatsHandler < ::Ox::Sax
     @customers = {}
 
     @in_order = false
-    @in_items = false
-    @in_customer = false
     @in_email = false
 
     @current_customer_id = nil
@@ -35,13 +33,8 @@ class OrderStatsHandler < ::Ox::Sax
       @current_customer_id = nil
       @current_order_status = nil
       @items_count = 0
-    when :items
-      @in_items = true if @in_order
-    when :customer
-      @in_customer = true
-      @current_email = nil
     when :email
-      @in_email = true if @in_customer
+      @in_email = true
     end
   end
 
@@ -54,15 +47,12 @@ class OrderStatsHandler < ::Ox::Sax
         @active_count += 1 if @current_order_status == 'active'
       end
       @in_order = false
-      @items_count = 0
-    when :items
-      @in_items = false
     when :customer
       if @current_customer_id_for_email && @current_email
         @customers[@current_customer_id_for_email] = @current_email
       end
-      @in_customer = false
       @current_customer_id_for_email = nil
+      @current_email = nil
     when :email
       @in_email = false
     end
@@ -70,25 +60,16 @@ class OrderStatsHandler < ::Ox::Sax
 
   def attr(name, value)
     if @in_order
-      case name
-      when :customer_id
-        @current_customer_id = value
-      when :status
-        @current_order_status = value
-      end
-    end
-    if @in_items && name == :quantity
-      @items_count += value.to_i
-    end
-    if @in_customer && name == :id
+      @current_customer_id = value if name == :customer_id
+      @current_order_status = value if name == :status
+      @items_count += value.to_i if name == :quantity
+    elsif name == :id
       @current_customer_id_for_email = value
     end
   end
 
   def text(value)
-    if @in_customer && @in_email
-      @current_email = value.strip
-    end
+    @current_email = value.strip if @in_email
   end
 end
 
@@ -98,7 +79,7 @@ Ox.sax_parse(handler, File.open(path, 'r:utf-8'))
 orders_per_customer = handler.orders_per_customer
 items_per_customer = handler.items_per_customer
 
-total_customers = orders_per_customer.keys.size
+total_customers = orders_per_customer.size
 total_orders = orders_per_customer.values.sum
 average_count = total_customers.zero? ? 0 : (total_orders.to_f / total_customers).round(2)
 
