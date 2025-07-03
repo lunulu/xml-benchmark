@@ -2,9 +2,18 @@ require 'colorize'
 require 'tty-table'
 require 'pathname'
 require 'fileutils'
+require 'optparse'
 
 RESULTS_DIR = 'data/benchmark_results'
 OUTPUT_MD   = 'docs/benchmark_table.md'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ruby script.rb [options]"
+  opts.on('-u', '--update-md', 'Update benchmark_table.md') do
+    options[:update_md] = true
+  end
+end.parse!
 
 unless Dir.exist?(RESULTS_DIR)
   warn "❌ No benchmark results found in #{RESULTS_DIR}".red
@@ -84,7 +93,6 @@ end
 
 rows.sort_by! { |row| row[2].to_f }
 
-# Print to terminal
 puts "\n📊 Benchmark Summary\n".bold
 tty_table = TTY::Table.new(
   header: ['Lang', 'Implementation', 'Real (s)', 'User (s)', 'Sys (s)', 'Mem (KB)'],
@@ -92,22 +100,25 @@ tty_table = TTY::Table.new(
 )
 puts tty_table.render(:unicode, padding: [0, 1, 0, 1])
 
-# Output markdown
-markdown_rows = results.sort_by { _1[:real] }.map do |r|
-  real = (r[:real] == min_real ? "**#{format('%.2f', r[:real])}**" : format('%.2f', r[:real]))
-  mem  = (r[:mem]  == min_mem  ? "**#{r[:mem]}**" : r[:mem].to_s)
+if options[:update_md]
+  markdown_rows = results.sort_by { _1[:real] }.map do |r|
+    real = (r[:real] == min_real ? "**#{format('%.2f', r[:real])}**" : format('%.2f', r[:real]))
+    mem  = (r[:mem]  == min_mem  ? "**#{r[:mem]}**" : r[:mem].to_s)
 
-  "| #{r[:lang].ljust(6)} | #{r[:impl]} | #{real} | #{format('%.2f', r[:user])} | #{format('%.2f', r[:sys])} | #{mem} |"
+    "| #{r[:lang].ljust(6)} | #{r[:impl]} | #{real} | #{format('%.2f', r[:user])} | #{format('%.2f', r[:sys])} | #{mem} |"
+  end
+
+  markdown_output = <<~MD
+    ## 📄 Full Benchmark Table
+
+    | Lang   | Implementation    | Real (s) | User (s) | Sys (s) | Mem (KB) |
+    |--------|-------------------|----------|----------|---------|----------|
+    #{markdown_rows.join("\n")}
+  MD
+
+  FileUtils.mkdir_p(File.dirname(OUTPUT_MD))
+  File.write(OUTPUT_MD, markdown_output)
+  puts "\n✅ Markdown table written to #{OUTPUT_MD}\n".green
+else
+  puts "\nℹ️  Skipped markdown update (pass --update-md to enable).\n".yellow
 end
-
-markdown_output = <<~MD
-  ## 📄 Full Benchmark Table
-
-  | Lang   | Implementation    | Real (s) | User (s) | Sys (s) | Mem (KB) |
-  |--------|-------------------|----------|----------|---------|----------|
-  #{markdown_rows.join("\n")}
-MD
-
-FileUtils.mkdir_p(File.dirname(OUTPUT_MD))
-File.write(OUTPUT_MD, markdown_output)
-puts "\n✅ Markdown table written to #{OUTPUT_MD}\n".green
