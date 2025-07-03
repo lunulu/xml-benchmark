@@ -119,6 +119,4 @@ if options[:update_md]
   FileUtils.mkdir_p(File.dirname(OUTPUT_MD))
   File.write(OUTPUT_MD, markdown_output)
   puts "\n✅ Markdown table written to #{OUTPUT_MD}\n".green
-else
-  puts "\nℹ️  Skipped markdown update (pass --update-md to enable).\n".yellow
 end

@@ -44,6 +44,11 @@ visualize:
 	@gem list tty-table -i > /dev/null || gem install tty-table
 	@ruby tools/visualize_bench.rb
 
+visualize-md:
+	@gem list colorize -i > /dev/null || gem install colorize
+	@gem list tty-table -i > /dev/null || gem install tty-table
+	@ruby tools/visualize_bench.rb -u
+
 build: $(LANGS:%=build-%)
 run:   $(LANGS:%=run-%)
 bench: $(LANGS:%=bench-%)
