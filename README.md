@@ -1,4 +1,4 @@
-# 📦 XML Parsing Benchmark Suite
+# XML Parsing Benchmark Suite
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-linux-lightgrey)
@@ -8,22 +8,22 @@
 
 ---
 
-## ✨ Overview
+## Overview
 
 This project benchmarks **streaming** and **tree-based** XML parsers in various languages, measuring:
 
-- ✅ Execution time (`real`, `user`, `sys`)
-- 📉 Peak memory usage (in kilobytes)
-- ⚙️ Parsing method (DOM, SAX, StAX, etc.)
+- Execution time (`real`, `user`, `sys`)
+- Peak memory usage (in kilobytes)
+- Parsing method (DOM, SAX, StAX, etc.)
 
 The suite helps answer:  
 **“Which language/library is fastest and most memory-efficient for parsing large XML files?”**
 
 ---
 
-## 🏁 Quick Start
+## Quick Start
 
-### 🔧 Recommended Flow
+### Recommended Flow
 
 The easiest way to run everything:
 
@@ -41,9 +41,9 @@ This will:
 
 ---
 
-## 📦 Installation
+## Installation
 
-> ℹ️ **Note:** `mise` is a convenient runtime manager. You can also set up environments manually if you prefer.
+> **Note:** `mise` is a convenient runtime manager. You can also set up environments manually if you prefer.
 
 ### 1. Install System Dependencies
 
@@ -65,32 +65,32 @@ make install
 
 ## 📈 Benchmark Results
 
-### 🏎️ Top 5 Fastest (by `real` time)
+### Top 5 Fastest (by `real` time)
 
-#### 🌳 DOM Parsers
-| 🥇 Rank | Language | Implementation | ⏱ Real (s) | 🧠 Mem (KB) |
-| ------: | -------- | -------------- | ---------- | ----------- |
-|       1 | C++      | pugixml        | **0.39**   | 505040      |
-|       2 | C        | libxml2        | 2.80       | 2182920     |
-|       3 | .NET     | xdocument      | 2.98       | 551896      |
-|       4 | PHP      | domdocument    | 3.29       | 1908840     |
-|       5 | Ruby     | ox             | 3.42       | 892676      |
+#### DOM Parsers
+| Rank | Language | Implementation | Real (s) | Mem (KB) |
+|-----:|----------|----------------|----------|----------|
+|    1 | C++      | pugixml        | **0.39** | 505040   |
+|    2 | C        | libxml2        | 2.80     | 2182920  |
+|    3 | .NET     | xdocument      | 2.98     | 551896   |
+|    4 | PHP      | domdocument    | 3.29     | 1908840  |
+|    5 | Ruby     | ox             | 3.42     | 892676   |
 
-#### 🧵 SAX / Streaming Parsers
-| 🥇 Rank | Language | Implementation | ⏱ Real (s) | 🧠 Mem (KB) |
-| ------: | -------- | -------------- | ---------- | ----------- |
-|       1 | C        | expat          | **0.82**   | 3536        |
-|       2 | C++      | expat          | 0.82       | 5920        |
-|       3 | Java     | sax            | 1.04       | 565328      |
-|       4 | Java     | stax           | 1.16       | 568432      |
-|       5 | Ruby     | ox-sax         | 1.40       | 17684       |
+#### SAX / Streaming Parsers
+| Rank | Language | Implementation | Real (s) | Mem (KB) |
+|-----:|----------|----------------|----------|----------|
+|    1 | C        | expat          | **0.82** | 3536     |
+|    2 | C++      | expat          | 0.82     | 5920     |
+|    3 | Java     | sax            | 1.04     | 565328   |
+|    4 | Java     | stax           | 1.16     | 568432   |
+|    5 | Ruby     | ox-sax         | 1.40     | 17684    |
 
-> 📊 Full benchmark table is viewable via `make visualize` or in **docs/benchmark_table.md** (`make visualize-md` to update).
+> Full benchmark table is viewable via `make visualize` or in **docs/benchmark_table.md** (`make visualize-md` to update).
 
 
 ---
 
-## 🔍 Usage
+## Usage
 
 ```bash
 make generate MB=100  # Generate sample XML data
@@ -110,7 +110,7 @@ make bench-c
 
 ---
 
-## 🗂 Project Structure
+## Project Structure
 
 ```
 .
@@ -131,14 +131,14 @@ make bench-c
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are more than welcome!
 
 In particular, feel free to:
-- 🔧 Improve or optimize existing parsers (as long as it doesn't break fairness)
-- 🆕 Add parsers for new languages or libraries
-- 🛠 Refactor internal tooling or Makefiles
+- Improve or optimize existing parsers (as long as it doesn't break fairness)
+- Add parsers for new languages or libraries
+- Refactor internal tooling or Makefiles
 
 **Note:** Please avoid "extreme" tuning (e.g. hardcoding output, unrealistic environment hacks) — the goal is realistic, portable performance.
 
@@ -155,11 +155,11 @@ make bench-<language>
 make visualize          # Validates outputs
 ```
 
-5. Open a PR 🙌
+5. Open a PR
 
 ---
 
-## 🧪 Methodology
+## Methodology
 
 - By default, a synthetic XML file of **100 MB** is generated for all parsers using `tools/generate_xml.rb`.  
   A small example is included in [`docs/sample.xml`](docs/sample.xml) for reference.
@@ -171,19 +171,14 @@ make visualize          # Validates outputs
   - and `mem` (peak memory usage in KB).
 - Benchmarks were executed on a **Ryzen 7 5800X**, running Ubuntu 24.04.
 
-> 📄 Full benchmark results are available in [`docs/benchmark_table.md`](docs/benchmark_table.md)
+> Full benchmark results are available in [`docs/benchmark_table.md`](docs/benchmark_table.md)
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 
----
-
-## 🙏 Acknowledgments
-
-Made with ❤️, `make`, and a lot of XML frustration.
 ---
 
 ## 🗣️ Supported Languages & Parsers
