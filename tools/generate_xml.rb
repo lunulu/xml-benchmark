@@ -82,7 +82,7 @@ def generate_large_xml(file_path, target_mb)
     f.write(%(\n</customers>\n</data>\n))
   end
 
-  puts "✅ Сгенерирован файл: #{file_path} (примерно #{target_mb} МБ, #{orders_count} заказов)"
+  puts "Сгенерирован файл: #{file_path} (примерно #{target_mb} МБ, #{orders_count} заказов)"
 end
 
 # ==== Параметры ====

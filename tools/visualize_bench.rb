@@ -16,7 +16,7 @@ OptionParser.new do |opts|
 end.parse!
 
 unless Dir.exist?(RESULTS_DIR)
-  warn "❌ No benchmark results found in #{RESULTS_DIR}".red
+  warn "No benchmark results found in #{RESULTS_DIR}".red
   exit 1
 end
 
@@ -35,7 +35,7 @@ Dir.glob("#{RESULTS_DIR}/**/*.log").each do |file|
     reference_lines = current_lines
   elsif reference_lines != current_lines
     inconsistent_files << file
-    warn "⚠️  Skipping inconsistent benchmark output: #{file}".yellow
+    warn "Skipping inconsistent benchmark output: #{file}".yellow
     next
   end
 
@@ -48,7 +48,7 @@ Dir.glob("#{RESULTS_DIR}/**/*.log").each do |file|
   mem  = content[/mem:\s*(\d+)/, 1]&.to_i
 
   if [real, user, sys, mem].any?(&:nil?)
-    warn "⚠️  Skipping incomplete log: #{file}".yellow
+    warn "Skipping incomplete log: #{file}".yellow
     next
   end
 
@@ -63,16 +63,16 @@ Dir.glob("#{RESULTS_DIR}/**/*.log").each do |file|
 end
 
 if results.empty?
-  warn "❌ No valid benchmark logs found.".red
+  warn "No valid benchmark logs found.".red
   exit 1
 end
 
-puts "\n🔍 Checking benchmark consistency...\n\n"
+puts "\nChecking benchmark consistency...\n\n"
 puts "Reference output (first 3 lines):".light_blue
 puts reference_lines.map { |line| "  #{line}" }.join("\n")
 puts
 
-puts "✅ All benchmark outputs are valid.\n".green if inconsistent_files.empty?
+puts "All benchmark outputs are valid.\n".green if inconsistent_files.empty?
 
 min_real = results.map { _1[:real] }.min
 min_mem  = results.map { _1[:mem]  }.min
@@ -93,7 +93,7 @@ end
 
 rows.sort_by! { |row| row[2].to_f }
 
-puts "\n📊 Benchmark Summary\n".bold
+puts "\nBenchmark Summary\n".bold
 tty_table = TTY::Table.new(
   header: ['Lang', 'Implementation', 'Real (s)', 'User (s)', 'Sys (s)', 'Mem (KB)'],
   rows: rows
@@ -109,7 +109,7 @@ if options[:update_md]
   end
 
   markdown_output = <<~MD
-    ## 📄 Full Benchmark Table
+    ## Full Benchmark Table
 
     | Lang   | Implementation    | Real (s) | User (s) | Sys (s) | Mem (KB) |
     |--------|-------------------|----------|----------|---------|----------|
@@ -118,5 +118,5 @@ if options[:update_md]
 
   FileUtils.mkdir_p(File.dirname(OUTPUT_MD))
   File.write(OUTPUT_MD, markdown_output)
-  puts "\n✅ Markdown table written to #{OUTPUT_MD}\n".green
+  puts "\nMarkdown table written to #{OUTPUT_MD}\n".green
 end

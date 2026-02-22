@@ -18,8 +18,8 @@ DATA := $(abspath data/input.xml)
 
 install:
 	@command -v mise >/dev/null 2>&1 || { \
-    		echo "❌ 'mise' is not installed. Please install it from: https://github.com/jdx/mise" >&2; \
-    		echo "🔁 After installing, re-run: make install" >&2; \
+    		echo "'mise' is not installed. Please install it from: https://github.com/jdx/mise" >&2; \
+    		echo "After installing, re-run: make install" >&2; \
     		exit 1; \
     }
 	@echo "📦 Installing languages and dependencies with mise"
@@ -29,7 +29,7 @@ install:
   		libreadline-dev libzip-dev libtidy-dev libxslt-dev pkg-config \
   		build-essential locate libgd-dev libglib2.0-dev uthash-dev
 	@mise install
-	@echo "✅ All environments installed"
+	@echo "All environments installed"
 
 full: generate build bench visualize
 
@@ -67,22 +67,22 @@ clean: $(foreach lang,$(LANGS),clean-$(lang))
 define build_rules
 
 build-$(1):
-	@echo "🔧 Building $(1)"
+	@echo "Building $(1)"
 	@for variant in $$(VARIANTS_$(1)); do \
-		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} build || echo "❌ $(LANG_DIR)/$(1)/$$$${variant}: build failed"; \
+		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} build || echo "$(LANG_DIR)/$(1)/$$$${variant}: build failed"; \
 	done
 
 run-$(1):
-	@echo "🚀 Running $(1)"
+	@echo "Running $(1)"
 	@for variant in $$(VARIANTS_$(1)); do \
-		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} run INPUT=$(DATA) || echo "❌ $(LANG_DIR)/$(1)/$$$${variant}: run failed"; \
+		$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$${variant} run INPUT=$(DATA) || echo "$(LANG_DIR)/$(1)/$$$${variant}: run failed"; \
 	done
 
 bench-$(1):
 	@mkdir -p data/benchmark_results/$(1)
 	@for variant in $$(VARIANTS_$(1)); do \
 		echo ""; \
-		echo "📶 Benchmarking $(1)/$$$$variant"; \
+		echo "Benchmarking $(1)/$$$$variant"; \
 		/usr/bin/time -f "real: %e sec\nuser: %U sec\nsys:  %S sec\nmem:  %M KB" \
 			$(MAKE) -s -C $(LANG_DIR)/$(1)/$$$$variant run INPUT=$(DATA) 2>&1 \
 			| tee data/benchmark_results/$(1)/$$$$variant.log; \

@@ -13,4 +13,5 @@ langs/dotnet/**/obj/
 langs/java/**/*.class
 langs/c/**/main
 langs/cpp/**/main
+langs/cpp/expat/expat_parser
 langs/cpp/pugixml/pugi*
