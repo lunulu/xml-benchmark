@@ -63,7 +63,7 @@ make install
 
 ---
 
-## 📈 Benchmark Results
+## Benchmark Results
 
 ### Top 5 Fastest (by `real` time)
 
@@ -181,7 +181,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🗣️ Supported Languages & Parsers
+## Supported Languages & Parsers
 
 - **Ruby**: `ox`, `ox-sax`, `nokogiri`
 - **Python**: `lxml`, `lxml-iterparse`, `elementtree`
